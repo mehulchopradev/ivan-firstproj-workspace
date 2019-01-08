@@ -1,0 +1,39 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="{% static 'css/app.css' %}">
+  <title>Register Here</title>
+</head>
+<body>
+  <img src="{% static 'images/library.jpeg' %}"><br>
+  <form>
+    <p>
+      <input type="text" placeholder="Enter Username">
+    </p>
+    <p>
+      <input type="password" placeholder="Enter Password">
+    </p>
+    <p>
+      Country:
+      <select>
+        <option>India</option>
+        <option>Netherlands</option>
+        <option>France</option>
+      </select>
+    </p>
+    <p>
+      Gender:
+      <input type="radio" name="gender">Male&nbsp;&nbsp;
+      <input type="radio" name="gender">Female
+    </p>
+    <p>
+      <input type="submit" value="Register">
+    </p>
+  </form>
+</body>
+</html>
