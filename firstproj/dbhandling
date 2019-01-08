@@ -1,0 +1,7 @@
+ORM (Object relational mapping)
+
+Object oriented world(You)             Relational database management system world
+
+- Class (Model)                             - Table
+- Class Attributes                          - Columns
+- Objects                                   - rows (tuples)

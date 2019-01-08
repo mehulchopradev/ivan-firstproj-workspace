@@ -11,25 +11,26 @@
 </head>
 <body>
   <img src="{% static 'images/library.jpeg' %}"><br>
-  <form>
+  <form action="{% url 'createuser' %}" method="POST">
+    {% csrf_token %}
     <p>
-      <input type="text" placeholder="Enter Username">
+      <input type="text" placeholder="Enter Username" name="username">
     </p>
     <p>
-      <input type="password" placeholder="Enter Password">
+      <input type="password" placeholder="Enter Password" name="password">
     </p>
     <p>
       Country:
-      <select>
-        <option>India</option>
-        <option>Netherlands</option>
-        <option>France</option>
+      <select name="country">
+        {% for country in countries %}
+          <option value="{{ country.0 }}">{{ country.1 }}</option>
+        {% endfor %}
       </select>
     </p>
     <p>
       Gender:
-      <input type="radio" name="gender">Male&nbsp;&nbsp;
-      <input type="radio" name="gender">Female
+      <input type="radio" name="gender" value="M">Male&nbsp;&nbsp;
+      <input type="radio" name="gender" value="F">Female
     </p>
     <p>
       <input type="submit" value="Register">
