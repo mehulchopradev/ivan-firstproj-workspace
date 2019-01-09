@@ -1,0 +1,36 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>::Welcome::</title>
+  <link rel="stylesheet" href="{% static 'css/app.css' %}">
+</head>
+<body>
+  <img src="{% static 'images/library.jpeg' %}"><br>
+  <h2>Book List</h2>
+  <hr>
+  <table border="1">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Price</th>
+        <th>Pages</th>
+        <th>Publication House</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for book in booklist %}
+        <tr>
+          <td>{{ book.title }}</td>
+          <td>{{ book.price }}</td>
+          <td>{{ book.pages }}</td>
+          <td>{{ book.publicationhouse.name }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</body>
+</html>

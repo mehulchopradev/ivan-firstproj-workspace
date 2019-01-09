@@ -11,12 +11,13 @@
 <body>
   <img src="{% static 'images/library.jpeg' %}"><br>
   <h2>{{ greetingmsg }}</h2>
-  <form>
+  <form method="POST" action="{% url 'auth' %}">
+    {% csrf_token %}
     <p>
-      <input type="text" placeholder="Enter Username">
+      <input type="text" placeholder="Enter Username" name="username">
     </p>
     <p>
-      <input type="password" placeholder="Enter Password">
+      <input type="password" placeholder="Enter Password" name="password">
     </p>
     <p>
       <input type="submit" value="Login">

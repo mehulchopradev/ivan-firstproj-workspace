@@ -1,30 +1,9 @@
 from django.shortcuts import render, reverse
-from datetime import datetime
-from django.http import HttpResponseRedirect
-from libapp.models import User
+from django.http import HttpResponseRedirect, HttpResponse
+from libapp.models import User, Book
+from libapp.service import getgreeting, getcountries
 
 # Create your views here.
-
-def getgreeting():
-  now = datetime.now()
-  hour = now.hour
-  if hour >= 0 and hour < 12:
-    message = 'Good Morning'
-  elif hour >= 12 and hour < 16:
-    message = 'Good Afternoon'
-  else:
-    message = 'Good Evening'
-  
-  return message
-
-def getcountries():
-  # imagine u have got the countries from the database
-  return [
-    ('IN', 'India'),
-    ('NE', 'Netherlands'),
-    ('US', 'United states of america'),
-    ('FR', 'France')
-  ]
 
 def showlogin(request):
   greeting = getgreeting()
@@ -50,5 +29,22 @@ def createuser(request):
   u = User(username=username, password=password, gender=gender, country=country)
   u.save()
 
+  if u.id:
+    return HttpResponseRedirect(reverse('login'))
+  else:
+    return HttpResponse('Error in registration')
 
-  return HttpResponseRedirect(reverse('login'))
+def authenticate(request):
+  username, password = request.POST['username'], request.POST['password']
+  l = User.objects.filter(username=username, password=password)
+  if l:
+    return HttpResponseRedirect(reverse('home'))
+  else:
+    return HttpResponseRedirect(reverse('login'))
+
+def showhome(request):
+  booklist = Book.objects.all()
+  contextdata = {
+    'booklist': booklist
+  }
+  return render(request, 'libapp/home.html', contextdata)
