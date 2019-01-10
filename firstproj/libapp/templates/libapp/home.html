@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="{% static 'css/app.css' %}">
 </head>
 <body>
+  Welcome ?????
   <img src="{% static 'images/library.jpeg' %}"><br>
   <h2>Book List</h2>
   <hr>
@@ -19,6 +20,7 @@
         <th>Price</th>
         <th>Pages</th>
         <th>Publication House</th>
+        <th></th>
       </tr>
     </thead>
     <tbody>
@@ -28,6 +30,9 @@
           <td>{{ book.price }}</td>
           <td>{{ book.pages }}</td>
           <td>{{ book.publicationhouse.name }}</td>
+          <td>
+            <a href="{% url 'bookdetails' book.id %}">Details</a>
+          </td>
         </tr>
       {% endfor %}
     </tbody>

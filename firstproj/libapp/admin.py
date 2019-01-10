@@ -7,7 +7,7 @@ class ReviewInline(admin.TabularInline):
 
 class BookAdmin(admin.ModelAdmin):
   list_display = ['title', 'pages', 'price']
-  fields = ['title', 'price', 'pages', 'publicationhouse']
+  fields = ['title', 'price', 'pages', 'publicationhouse', 'published']
   search_fields = ['title']
   list_filter = ['pages', 'price']
   inlines = [ReviewInline]

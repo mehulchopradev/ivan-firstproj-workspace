@@ -1,4 +1,5 @@
 from django.db import models
+from datetime import date
 
 # Create your models here.
 
@@ -19,7 +20,11 @@ class Book(models.Model):
   title = models.CharField(max_length=50, null=False)
   pages = models.IntegerField(null=False)
   price = models.FloatField(null=True, blank=True)
+  published = models.DateField(null=True, default=date.today())
   publicationhouse = models.ForeignKey(PublicationHouse, on_delete=models.CASCADE)
+
+  # magic field
+  # review_set
 
   def __str__(self):
       return self.title

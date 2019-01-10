@@ -1,0 +1,33 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Book Details</title>
+  <link rel="stylesheet" href="{% static 'css/app.css' %}">
+</head>
+<body>
+  Welcome ????
+  <img src="{% static 'images/library.jpeg' %}"><br>
+  <h2>Book Details</h2>
+  <hr>
+  <b>{{ book.title }}</b><br>
+  <i>Pages : {{ book.pages }}&nbsp;&nbsp;Price : {{ book.price }}</i><br>
+  <h3>Publication House</h3>
+  <b>{{ book.publicationhouse.name }}</b><br>
+  Ratings: {{ book.publicationhouse.ratings }}
+  <h3>Reviews</h3>
+  {% if book.review_set.all %}
+    {% for review in book.review_set.all %}
+      <div>
+        <i>{{ review.reviewer }}</i>
+        <p>{{ review.description }}</p>
+      </div>
+    {% endfor %}
+  {% else %}
+      No reviews for this book
+  {% endif %}
+</body>
+</html>

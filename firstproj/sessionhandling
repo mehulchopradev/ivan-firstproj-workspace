@@ -1,0 +1,25 @@
+Client					Server
+Ivan
+r1						Session for ivan - sessionid (unique)
+						Associate username, userid with Ivan’s session (attribute)
+						send cookie to ivan machine where value is sessionid
+c1
+
+
+
+
+Mehul
+R1						Session for Mehul - sessionid (unique)
+						Associate username, userid with Mehul’s session (attribute)
+
+						send cookie to Mehul’s machine where value is sessionid
+c2
+
+
+Ivan
+r10 - c1					Ivan’ Session
+						From session get username and userid attribute
+
+Mehul
+R13 - c2					Mehul’s Session
+						From session get username and userid attribute
