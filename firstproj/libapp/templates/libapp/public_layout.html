@@ -1,0 +1,25 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>
+    {% block title %}
+    {% endblock title %}
+  </title>
+  <link rel="stylesheet" href="{% static 'css/app.css' %}">
+</head>
+<body>
+  <img src="{% static 'images/library.jpeg' %}"><br>
+  {% block supportingimage %}
+  {% endblock supportingimage %}
+
+  {% block content %}
+  {% endblock content %}
+  <footer>
+    All rights reserved. Copyright 2020
+  </footer>
+</body>
+</html>

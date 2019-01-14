@@ -1,17 +1,15 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Login Here</title>
-  <link rel="stylesheet" href="{% static 'css/app.css' %}">
-</head>
-<body>
-  <img src="{% static 'images/library.jpeg' %}"><br>
+{% extends "libapp/public_layout.html" %}
+
+{% block title %}
+  Login Here
+{% endblock title %}
+
+{% block supportingimage %}
   <h2>{{ greetingmsg }}</h2>
-  <form method="POST" action="{% url 'auth' %}">
+{% endblock supportingimage %}
+
+{% block content %}
+<form method="POST" action="{% url 'auth' %}">
     {% csrf_token %}
     <p>
       <input type="text" placeholder="Enter Username" name="username">
@@ -24,5 +22,4 @@
     </p>
   </form>
   <a href="{% url 'reg' %}">New User? Sign Up Here!</a>
-</body>
-</html>
+{% endblock content %}

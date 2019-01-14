@@ -1,17 +1,11 @@
-{% load static %}
+{% extends "libapp/public_layout.html" %}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link rel="stylesheet" href="{% static 'css/app.css' %}">
-  <title>Register Here</title>
-</head>
-<body>
-  <img src="{% static 'images/library.jpeg' %}"><br>
-  <form action="{% url 'createuser' %}" method="POST">
+{% block title %}
+  Register Here
+{% endblock title %}
+
+{% block content %}
+<form action="{% url 'createuser' %}" method="POST">
     {% csrf_token %}
     <p>
       <input type="text" placeholder="Enter Username" name="username">
@@ -36,5 +30,4 @@
       <input type="submit" value="Register">
     </p>
   </form>
-</body>
-</html>
+{% endblock content %}

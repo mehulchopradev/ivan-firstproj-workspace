@@ -9,7 +9,8 @@
   <link rel="stylesheet" href="{% static 'css/app.css' %}">
 </head>
 <body>
-  Welcome ????
+  <h3>Welcome {{ username }}</h3>
+  <span><a href="{% url 'logout' %}">Logout</a></span><br><br>
   <img src="{% static 'images/library.jpeg' %}"><br>
   <h2>Book Details</h2>
   <hr>

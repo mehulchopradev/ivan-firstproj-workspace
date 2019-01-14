@@ -1,5 +1,6 @@
 from django.urls import path
-from libapp.views import showlogin, showregister, createuser, authenticate, showhome, showbookdetails
+from libapp.views import showlogin, showregister, createuser, authenticate, showhome, showbookdetails, logout,\
+  issuebook, returnbook
 
 # lib/
 
@@ -13,5 +14,8 @@ urlpatterns = [
   path('create-users/', createuser, name='createuser'),
   path('auth/', authenticate, name='auth'),
   path('home/', showhome, name='home'),
-  path('book-details/<int:bookid>', showbookdetails, name='bookdetails')
+  path('book-details/<int:bookid>', showbookdetails, name='bookdetails'),
+  path('logout/', logout, name='logout'),
+  path('issue-book/<int:bookid>', issuebook, name='issuebook'),
+  path('return-book/<int:bookid>', returnbook, name='returnbook')
 ]

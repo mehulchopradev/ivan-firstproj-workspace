@@ -40,22 +40,67 @@ def authenticate(request):
   if l:
     user = l[0]
     userid = user.id
+    session = request.session
+    session['username'] = username
+    session['userid'] = userid
+
     return HttpResponseRedirect(reverse('home'))
   else:
     return HttpResponseRedirect(reverse('login'))
 
 def showhome(request):
+  session = request.session
+  if 'username' not in session:
+    return HttpResponseRedirect(reverse('login'))
+
+  userid = request.session['userid']
   booklist = Book.objects.order_by('-price')
+  for book in booklist:
+    if book.user_set.filter(pk=userid):
+      book.alreadyissued = True
+    else:
+      if book.quantity - book.user_set.count():
+        book.canbeissued = True
+      else:
+        book.canbeissued = False
+
   contextdata = {
-    'booklist': booklist
+    'booklist': booklist,
+    'username': session['username']
   }
   return render(request, 'libapp/home.html', contextdata)
 
 def showbookdetails(request, bookid):
   # get the id (pk) of the book whose details we want ???
   # get the details of a particular book from the database
+  session = request.session
+  if 'username' not in session:
+    return HttpResponseRedirect(reverse('login'))
+
   book = Book.objects.get(pk=bookid)
   contextdata = {
-    'book': book
+    'book': book,
+    'username': session['username']
   }
   return render(request, 'libapp/bookdetails.html', contextdata)
+
+def logout(request):
+  session = request.session
+  session.flush()
+
+  return HttpResponseRedirect(reverse('login'))
+
+def issuebook(request, bookid):
+  book = Book.objects.get(pk=bookid)
+  userid = request.session['userid']
+  user = User.objects.get(pk=userid)
+
+  user.booksissued.add(book)
+
+  return HttpResponseRedirect(reverse('home'))
+
+def returnbook(request, bookid):
+  user = User.objects.get(pk=request.session['userid'])
+  user.booksissued.remove(bookid)
+
+  return HttpResponseRedirect(reverse('home'))
