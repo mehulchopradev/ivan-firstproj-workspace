@@ -1,14 +1,118 @@
 from django.shortcuts import render, reverse
 from django.http import HttpResponseRedirect, HttpResponse
+from django.views import View
+from django.views.generic.edit import FormView
 from libapp.models import User, Book
 from libapp.service import getgreeting, getcountries
+from libapp.forms import LoginForm, RegisterForm
 
 # Create your views here.
+
+class RegisterFormView(FormView):
+  template_name = 'libapp/register.html'
+  form_class = RegisterForm
+
+  def form_valid(self, form):
+    data = form.cleaned_data
+
+    u = User(**data)
+    u.save()
+
+    if u.id:
+      return HttpResponseRedirect(reverse('login'))
+    else:
+      return render(request, 'libapp/register.html', {
+        'form': form,
+      })
+
+class RegisterView(View):
+  def get(self, request):
+    form = RegisterForm()
+
+    return render(request, 'libapp/register.html', {
+      'form': form,
+    })
+
+  def post(self, request):
+    form = RegisterForm(request.POST)
+    if form.is_valid():
+      data = form.cleaned_data
+
+      u = User(**data)
+      u.save()
+
+      if u.id:
+        return HttpResponseRedirect(reverse('login'))
+    
+    return render(request, 'libapp/register.html', {
+      'form': form,
+    })
+
+class AuthView(View):
+  def get(self, request):
+    greeting = getgreeting()
+    form = LoginForm()
+
+    return render(request, 'libapp/login.html', {
+      'form': form,
+      'greetingmsg': greeting
+    })
+
+  def post(self, request):
+    greeting = getgreeting()
+
+    form = LoginForm(request.POST)
+    if form.is_valid():
+      data = form.cleaned_data
+      username, password = data['username'], data['password']
+
+      l = User.objects.filter(username=data['username'], password=data['password'])
+      if l:
+        user = l[0]
+        userid = user.id
+        session = request.session
+        session['username'] = username
+        session['userid'] = userid
+
+        return HttpResponseRedirect(reverse('home'))
+    
+    return render(request, 'libapp/login.html', {
+      'form': form,
+      'greetingmsg': greeting
+    })
+
+'''def authform(request):
+  greeting = getgreeting()
+
+  # GET
+  if request.method == 'GET':
+    form = LoginForm()
+  else:
+    form = LoginForm(request.POST)
+    if form.is_valid():
+      data = form.cleaned_data
+      username, password = data['username'], data['password']
+
+      l = User.objects.filter(username=data['username'], password=data['password'])
+      if l:
+        user = l[0]
+        userid = user.id
+        session = request.session
+        session['username'] = username
+        session['userid'] = userid
+
+        return HttpResponseRedirect(reverse('home'))
+  
+  return render(request, 'libapp/login.html', {
+    'form': form,
+    'greetingmsg': greeting
+  })'''
 
 def showlogin(request):
   greeting = getgreeting()
   contextdata = {
-    'greetingmsg': greeting
+    'greetingmsg': greeting,
+    'form': LoginForm()
   }
   return render(request, 'libapp/login.html', contextdata)
 

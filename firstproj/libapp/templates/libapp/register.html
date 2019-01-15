@@ -5,27 +5,9 @@
 {% endblock title %}
 
 {% block content %}
-<form action="{% url 'createuser' %}" method="POST">
+<form action="{% url 'signup' %}" method="POST" novalidate="novalidate">
     {% csrf_token %}
-    <p>
-      <input type="text" placeholder="Enter Username" name="username">
-    </p>
-    <p>
-      <input type="password" placeholder="Enter Password" name="password">
-    </p>
-    <p>
-      Country:
-      <select name="country">
-        {% for country in countries %}
-          <option value="{{ country.0 }}">{{ country.1 }}</option>
-        {% endfor %}
-      </select>
-    </p>
-    <p>
-      Gender:
-      <input type="radio" name="gender" value="M">Male&nbsp;&nbsp;
-      <input type="radio" name="gender" value="F">Female
-    </p>
+    {{ form.as_p }}
     <p>
       <input type="submit" value="Register">
     </p>

@@ -9,17 +9,12 @@
 {% endblock supportingimage %}
 
 {% block content %}
-<form method="POST" action="{% url 'auth' %}">
-    {% csrf_token %}
-    <p>
-      <input type="text" placeholder="Enter Username" name="username">
-    </p>
-    <p>
-      <input type="password" placeholder="Enter Password" name="password">
-    </p>
-    <p>
-      <input type="submit" value="Login">
-    </p>
-  </form>
-  <a href="{% url 'reg' %}">New User? Sign Up Here!</a>
+<form method="POST" action="{% url 'signin' %}" novalidate="novalidate">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <p>
+    <input type="submit" value="Login">
+  </p>
+</form>
+<a href="{% url 'signup' %}">New User? Sign Up Here!</a>
 {% endblock content %}
