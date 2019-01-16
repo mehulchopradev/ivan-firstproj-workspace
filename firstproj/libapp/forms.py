@@ -27,9 +27,20 @@ class RegisterModelForm(forms.ModelForm):
     fields = ['username','password','gender','country']
     widgets = {
       'username': forms.TextInput(attrs={'placeholder': 'Enter Username'}),
-      'password': forms.PasswordInput(attrs={'placeholder': 'Enter Password'})
+      'password': forms.PasswordInput(attrs={'placeholder': 'Enter Password'}),
+      'gender': forms.RadioSelect
     }
     labels = {
       'username': '',
       'password': ''
     }
+  
+  def clean_username(self):
+    data = self.cleaned_data
+    username = data['username']
+
+    tokens = username.split(' ')
+    if len(tokens) > 1:
+      raise forms.ValidationError('Username should be one worded')
+    return username
+

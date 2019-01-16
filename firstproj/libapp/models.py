@@ -33,6 +33,11 @@ class Review(models.Model):
 class User(models.Model):
   username = models.CharField(max_length=20, null=False)
   password = models.CharField(max_length=15, null=False)
-  gender = models.CharField(max_length=1, null=False)
+  gender = models.CharField(max_length=1, null=False, choices=(('M', 'Male'),('F', 'Female')), default='F')
   country = models.CharField(max_length=25, null=True, choices=(('IN', 'India'),('NE', 'Netherlands')))
-  booksissued = models.ManyToManyField(Book)
+  booksissued = models.ManyToManyField(Book, through='UserBookIssue')
+
+class UserBookIssue(models.Model):
+  user = models.ForeignKey(User, on_delete=models.CASCADE)
+  book = models.ForeignKey(Book, on_delete=models.CASCADE)
+  issuedate = models.DateField()

@@ -2,21 +2,24 @@ from django.shortcuts import render, reverse
 from django.http import HttpResponseRedirect, HttpResponse
 from django.views import View
 from django.views.generic.edit import FormView
-from libapp.models import User, Book
+from libapp.models import User, Book, UserBookIssue
 from libapp.service import getgreeting, getcountries
-from libapp.forms import LoginForm, RegisterForm
+from libapp.forms import LoginForm, RegisterForm, RegisterModelForm
+from datetime import date
 
 # Create your views here.
 
 class RegisterFormView(FormView):
   template_name = 'libapp/register.html'
-  form_class = RegisterForm
+  form_class = RegisterModelForm
 
   def form_valid(self, form):
-    data = form.cleaned_data
+    '''data = form.cleaned_data
 
     u = User(**data)
-    u.save()
+    u.save()'''
+
+    u = form.save()
 
     if u.id:
       return HttpResponseRedirect(reverse('login'))
@@ -199,7 +202,9 @@ def issuebook(request, bookid):
   userid = request.session['userid']
   user = User.objects.get(pk=userid)
 
-  user.booksissued.add(book)
+  # user.booksissued.add(book)
+  ubi = UserBookIssue(user=user, book=book, issuedate=date.today())
+  ubi.save()
 
   return HttpResponseRedirect(reverse('home'))
 
