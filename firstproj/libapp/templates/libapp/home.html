@@ -10,6 +10,7 @@
 </head>
 <body>
   <h3>Welcome {{ username }}</h3>
+  <img class="profile" src="{% url 'profilepic' %}" alt=""><br>
   <span><a href="{% url 'logout' %}">Logout</a></span><br><br>
   <img src="{% static 'images/library.jpeg' %}"><br>
   <h2>Book List</h2>

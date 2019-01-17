@@ -1,6 +1,9 @@
 from django.db import models
 from datetime import date
 
+def buildprofilepicpath(user, filename):
+  return 'ivan_files/{0}/{1}'.format(user.username, filename)
+
 # Create your models here.
 
 class PublicationHouse(models.Model):
@@ -35,6 +38,7 @@ class User(models.Model):
   password = models.CharField(max_length=15, null=False)
   gender = models.CharField(max_length=1, null=False, choices=(('M', 'Male'),('F', 'Female')), default='F')
   country = models.CharField(max_length=25, null=True, choices=(('IN', 'India'),('NE', 'Netherlands')))
+  profilepic = models.ImageField(null=True, blank=True, upload_to=buildprofilepicpath)
   booksissued = models.ManyToManyField(Book, through='UserBookIssue')
 
 class UserBookIssue(models.Model):

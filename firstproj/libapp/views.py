@@ -1,6 +1,7 @@
 from django.shortcuts import render, reverse
 from django.http import HttpResponseRedirect, HttpResponse
 from django.views import View
+from django.conf import settings
 from django.views.generic.edit import FormView
 from libapp.models import User, Book, UserBookIssue
 from libapp.service import getgreeting, getcountries
@@ -213,3 +214,15 @@ def returnbook(request, bookid):
   user.booksissued.remove(bookid)
 
   return HttpResponseRedirect(reverse('home'))
+
+def getprofilepic(request):
+  userid = request.session['userid']
+  user = User.objects.get(pk=userid)
+
+  if user.profilepic:
+    profilepicpath = user.profilepic.path
+  else:
+    profilepicpath = settings.MEDIA_ROOT + 'ivan_files/no_profile.jpg'
+
+  with open(profilepicpath, mode='rb') as fp:
+      return HttpResponse(fp.read(), content_type='image/jpg')

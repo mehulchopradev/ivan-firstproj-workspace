@@ -1,6 +1,6 @@
 from django.urls import path
 from libapp.views import showlogin, showregister, createuser, authenticate, showhome, showbookdetails, logout,\
-  issuebook, returnbook, AuthView, RegisterView, RegisterFormView
+  issuebook, returnbook, AuthView, RegisterView, RegisterFormView, getprofilepic
 
 # lib/
 
@@ -19,5 +19,6 @@ urlpatterns = [
   path('issue-book/<int:bookid>', issuebook, name='issuebook'),
   path('return-book/<int:bookid>', returnbook, name='returnbook'),
   path('sign-in/', AuthView.as_view(), name='signin'),
-  path('sign-up/', RegisterFormView.as_view(), name='signup')
+  path('sign-up/', RegisterFormView.as_view(), name='signup'),
+  path('profile-pic/', getprofilepic, name='profilepic')
 ]

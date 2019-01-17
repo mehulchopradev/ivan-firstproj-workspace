@@ -5,11 +5,12 @@
 {% endblock title %}
 
 {% block content %}
-<form action="{% url 'signup' %}" method="POST" novalidate="novalidate">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <p>
-      <input type="submit" value="Register">
-    </p>
-  </form>
+<!-- for uploading as part of the form, method post becomes compulsory and enctype should be multipart/form-data -->
+<form action="{% url 'signup' %}" method="POST" novalidate="novalidate" enctype="multipart/form-data">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <p>
+    <input type="submit" value="Register">
+  </p>
+</form>
 {% endblock content %}

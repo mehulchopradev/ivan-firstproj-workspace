@@ -24,7 +24,8 @@ class RegisterForm(forms.Form):
 class RegisterModelForm(forms.ModelForm):
   class Meta:
     model = User
-    fields = ['username','password','gender','country']
+    # for all the fields just add a value __all__
+    fields = ['username','password','gender','country','profilepic']
     widgets = {
       'username': forms.TextInput(attrs={'placeholder': 'Enter Username'}),
       'password': forms.PasswordInput(attrs={'placeholder': 'Enter Password'}),
