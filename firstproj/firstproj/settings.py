@@ -125,3 +125,5 @@ MEDIA_ROOT = '/Users/mehul.chopra/Documents/'
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+CELERY_BROKER_URL = 'amqp://localhost'

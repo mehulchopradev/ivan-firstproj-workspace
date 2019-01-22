@@ -7,6 +7,7 @@ from libapp.models import User, Book, UserBookIssue
 from libapp.service import getgreeting, getcountries
 from libapp.forms import LoginForm, RegisterForm, RegisterModelForm
 from datetime import date
+from libapp.tasks import send_verification_email
 
 # Create your views here.
 
@@ -23,6 +24,10 @@ class RegisterFormView(FormView):
     u = form.save()
 
     if u.id:
+      
+      # will execute as part of a separate message driven process (asynchronous)
+      send_verification_email.delay(u.username)
+
       return HttpResponseRedirect(reverse('login'))
     else:
       return render(request, 'libapp/register.html', {

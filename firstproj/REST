@@ -1,0 +1,59 @@
+- Philosophy for designing standard, scalable industry recognized web services
+- HTTP
+
+- Resources : books, authors, publicationhouses
+  - Abstract out from the client where the resources are saved. Database, file system, other system
+
+- URL (address of the resource)
+  - /books (plural)
+  - /authors
+  - Uniformity in the urls
+    - Create a new book : /books
+    - Get all the books : /books
+    - Update an existing book : /books/<<resource id of the book to be updated>>
+    - Delete an existing book : /books/<<resource id of the book to be deleted>>
+    - Get an existing book : /books/<<resource id of the book to be fetched>>
+- HTTP Methods (Action)
+  - Create book : /books - POST
+  - Getting all the books : /books - GET
+
+  - Update an existing book : /books/<<resource id of the book to be updated>> - PUT
+  - Delete an existing book : /books/<<resource id of the book to be deleted>> - DELETE
+  - Get an existing book : /books/<<resource id of the book to be fetched>> - GET
+
+- Data (JSON)
+  - POST /books
+    Request - {
+  "title": "Book1",
+  "pages": 100,
+  "price": 900
+}
+  - GET /books
+    Response - [
+  {
+    "title": "book 1",
+    "price": 900,
+    "pages": 300
+  },
+  {
+    "title": "book 2",
+    "price": 400,
+    "pages": 670
+  },
+  {
+    "title": "book 3",
+    "price": 1000,
+    "pages": 200
+  }
+]
+
+- Status code (Response)
+  - Success
+    - POST : 201 (CREATED)
+    - GET : 200 (OK)
+    - PUT : 200 (OK)
+    - DELETE: 204 (no content) or 200 (OK)
+
+  - Error
+    - Client side error : 4xx
+    - Server side error : 5xx
